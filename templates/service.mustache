@@ -1,10 +1,10 @@
 [Unit]
 Description={{description}}
-After=network.target nss-lookup.target
+After=network.target
 
 [Service]
 ExecStart=/usr/bin/npm start
-WorkingDirectory=/usr/lib/{{name}}
+WorkingDirectory={{installDir}}/{{name}}
 Restart=always
 StandardOutput=syslog
 StandardError=syslog

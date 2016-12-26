@@ -90,22 +90,6 @@ specit
 # build the RPM (using rpmbuild, mock etc.)
 ```
 
-### Local installation
-
-To avoid the need to install specit globally, we recommend installing it _locally_ and creating an [npm script](https://docs.npmjs.com/misc/scripts) in your `package.json` file:
-
-```
-npm install --save-dev specit
-```
-
-```json
-{
-  "scripts": {
-    "spec": "specit"
-  }
-}
-```
-
 You can then run `npm run spec` to generate your spec file in an environment where specit isn't installed globally (like your CI server.)
 
 ### Custom Spec Template
@@ -182,8 +166,18 @@ Specit creates the following directories for your application:
 
 |Directory|Purpose|
 |---------|-------|
-|`/usr/lib/:projectName`|This is where your application is stored|
+|`/opt/:projectName`|This is where your application is stored|
 |`/var/log/:projectName`|This is created for any log files that your application needs to write to|
+
+#### Changing Install Path
+You can set Installation path by setting the `installDir` inside your `package.json`:
+```json
+{
+  "spec": {
+    "installDir": "/usr/local"
+  }
+}
+```
 
 ## Configuration
 
@@ -254,7 +248,7 @@ If you need to perform any actions after installing your package (such as moving
 {
   "spec": {
     "post": [
-      "mv /usr/lib/my-cool-api/rc.local /etc/rc.local"
+      "mv /opt/my-cool-api/rc.local /etc/rc.local"
     ]
   }
 }

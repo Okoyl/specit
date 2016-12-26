@@ -111,7 +111,7 @@ You can then run `npm run spec` to generate your spec file in an environment whe
 
 ### Custom Spec Template
 
-If you want to use a different specfile template to create you package, you can specify it your `package.json`:
+If you want to use a different specfile template to create your package, you can specify it your `package.json`:
 ```json
 {
   "spec": {

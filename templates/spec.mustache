@@ -37,7 +37,12 @@ AutoReqProv: no
 {{#prune}}
 npm prune --production
 {{/prune}}
+{{#noarch}}
+# skip npm rebuild
+{{/noarch}}
+{{^noarch}}
 npm rebuild
+{{/noarch}}
 
 %pre
 getent group {{username}} >/dev/null || groupadd -r {{username}}

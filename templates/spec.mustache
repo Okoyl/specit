@@ -54,7 +54,9 @@ getent passwd {{username}} >/dev/null || useradd -r -g {{username}} -G {{usernam
 %install
 mkdir -p %{buildroot}{{installDir}}/{{name}}
 cp -r ./* %{buildroot}{{installDir}}/{{name}}
+{{#syslog}}
 mkdir -p %{buildroot}/var/log/{{name}}
+{{/syslog}}
 
 %post
 cp {{installDir}}/{{name}}/{{name}}.service /usr/lib/systemd/system/{{name}}.service
@@ -69,7 +71,9 @@ rm -rf %{buildroot}
 %files
 %defattr(644, {{username}}, {{username}}, 755)
 {{installDir}}/{{name}}
+{{#syslog}}
 /var/log/{{name}}
+{{/syslog}}
 {{#hasExecutableFiles}}
 %defattr(755, {{username}}, {{username}}, 755)
 {{#executableFiles}}

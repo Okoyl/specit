@@ -54,7 +54,6 @@ my-cool-api
 Specit is designed to be used at build time, just before you package your application into an RPM. Because of this, we recommend adding the generated files to your `.gitignore` file:
 
 ```
-*.service
 SOURCES
 SPECS
 ```
@@ -63,16 +62,24 @@ SPECS
 
 Specit assumes that you've _already installed your npm dependencies_ when it is run. This means that you don't need to worry about running `npm install` inside a clean RPM-building environment like _mock_.
 
-The generated spec file instructs your RPM building tool to run [`npm rebuild`](https://docs.npmjs.com/cli/rebuild) as part of the build process. This ensures that any native modules are rebuilt for your target environment, even if they were originally installed on a different platform.
 
-A typical specit build looks like this:
+### Release Number
 
-```bash
-npm install
-npm test
-specit
-# build the RPM (using rpmbuild, mock etc.)
+By default specit will set the RPM release number to 1, if you want to override this you can do so by using the `--release` flag:
+
+```sh
+specit --release=7
 ```
+
+### Custom Name
+
+By default specit will set the name from `package.json`, if you want to override this you can do so by using the `--name` flag:
+
+```sh
+specit --name=my-cool-api
+```
+
+This is useful if you are using private NPM packages which start with an `@`.
 
 You can then run `npm run spec` to generate your spec file in an environment where specit isn't installed globally (like your CI server.)
 
@@ -249,20 +256,15 @@ If you need to specify environment variables during startup (NODE_ENV for exampl
 }
 ```
 
-### Release Number
+### syslog
 
-By default specit will set the RPM release number to 1, if you want to override this you can do so by using the `--release` flag:
+speculate had syslog enabled by default for their generated services, which might cause double logging because systemd already has journald for it's logging purposes.
+ you can enable syslog back if you find it important.
 
-```sh
-specit --release=7
+```json
+{
+  "spec": {
+    "syslog": true
+  }
+}
 ```
-
-### Custom Name
-
-By default specit will set the name from `package.json`, if you want to override this you can do so by using the `--name` flag:
-
-```sh
-specit --name=my-cool-api
-```
-
-This is useful if you are using private NPM packages which start with an `@`.

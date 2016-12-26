@@ -6,9 +6,11 @@ After=network.target
 ExecStart=/usr/bin/npm start
 WorkingDirectory={{installDir}}/{{name}}
 Restart=always
+{{#syslog}}
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier={{name}}
+{{/syslog}}
 User={{username}}
 Group={{username}}
 {{#environment}}

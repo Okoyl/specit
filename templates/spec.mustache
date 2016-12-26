@@ -12,6 +12,12 @@ Group: Installation Script
 License: {{license}}
 Source: %{name}.tar.gz
 BuildRoot: %{buildroot}
+{{#noarch}}
+BuildArch: noarch
+# Disable any build shell actions. replace them with simply 'true'
+%define __spec_build_post true
+%define __spec_build_pre true
+{{/noarch}}
 Requires: nodejs{{#nodeVersion}} {{{nodeVersion}}}{{/nodeVersion}}
 {{#requires}}
 Requires: {{.}}

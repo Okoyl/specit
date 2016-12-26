@@ -119,6 +119,20 @@ If you want to use a different specfile template to create your package, you can
 }
 ```
 
+### Build Architecture
+
+By default Specit will build `noarch` packages meaning the final package should be installable on every CPU Architecture your system runs on. 
+Specit's default template will also skip instruct rpmbuild to skip binary stripping during build.
+If your Nodejs application has binary modules you may want to disable this behavior through your `package.json`.
+
+```json
+{
+  "spec": {
+    "noarch": false  
+  }
+}
+```
+
 ### Pruning dependencies
 
 To minimise the final RPM size, your development dependencies (dependencies added with the --save-dev flag) are automatically [pruned](https://docs.npmjs.com/cli/prune) so that they're not shipped with your production code.

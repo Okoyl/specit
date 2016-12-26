@@ -1,6 +1,6 @@
 # specit
 
-> specit is a fork of [speculate](https://github.com/bbc/specit) with some different goals.
+> specit is a fork of [speculate](https://github.com/bbc/specit) with some different goals. specit meant to support more distributions, provide even more options. Feel free to create issues, submit more code.
 
 Automatically generates an RPM Spec file for your Node.js project
 
@@ -19,22 +19,6 @@ npm install --global specit
 ## Usage
 
 Let's start with a simple Node.js project:
-
-```
-my-cool-api
-├── package.json
-└── server.js
-
-0 directories, 2 files
-```
-
-First run npm install to install your dependencies:
-
-```
-npm install
-```
-
-This creates the `node_modules` directory:
 
 ```
 my-cool-api
@@ -106,7 +90,7 @@ If you want to use a different specfile template to create your package, you can
 ### Build Architecture
 
 By default Specit will build `noarch` packages meaning the final package should be installable on every CPU Architecture your system runs on. 
-Specit's default template will also skip instruct rpmbuild to skip binary stripping during build.
+Specit's default template will also instruct rpmbuild to skip binary stripping during build.
 If your Nodejs application has binary modules you may want to disable this behavior through your `package.json`.
 
 ```json
@@ -149,16 +133,16 @@ By default, the spec file that specit generates _isn't_ tied to a particular Nod
 
 We **strongly recommend** that you use the [Nodesource binary distributions](https://github.com/nodesource/distributions) to install a modern version of Node.js for both your RPM building environment and your target server. Follow the setup instructions for [Enterprise Linux](https://github.com/nodesource/distributions#rpm) and then run `yum install nodejs`.
 
-If you're using multiple node repositories or a repository with multiple versions of node, you can specify an RPM version requirement with the `nodeVersion` property in your `package.json` file:
+If you're using multiple node repositories or a repository with multiple versions of node, you can specify an RPM version requirement with the `engines` property in your `package.json` file:
 
 ```json
 {
-  "spec": {
-    "nodeVersion": "< 5.0.0"
+  "engines": {
+    "node": "< 5.0.0"
   }
 }
 ```
-The `nodeVersion` property must conform to the [RPM version syntax](http://www.rpm.org/max-rpm/s1-rpm-depend-manual-dependencies.html#S3-RPM-DEPEND-VERSION-REQUIREMENTS)
+The `engines.node` property must conform to the [RPM version syntax](http://www.rpm.org/max-rpm/s1-rpm-depend-manual-dependencies.html#S3-RPM-DEPEND-VERSION-REQUIREMENTS)
 
 ### Directory Structure
 
@@ -169,7 +153,7 @@ Specit creates the following directories for your application:
 |`/opt/:projectName`|This is where your application is stored|
 |`/var/log/:projectName`|This is created for any log files that your application needs to write to|
 
-#### Changing Install Path
+## Changing Install Path
 You can set Installation path by setting the `installDir` inside your `package.json`:
 ```json
 {
@@ -178,10 +162,6 @@ You can set Installation path by setting the `installDir` inside your `package.j
   }
 }
 ```
-
-## Configuration
-
-Specit is configured using the `spec` property inside your existing `package.json` file.
 
 ### Dependencies
 

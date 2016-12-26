@@ -12,7 +12,7 @@ var cwd = process.cwd();
 var isValid = validator(cwd);
 
 if (!isValid) {
-  console.error('Please run speculate from within a valid Node.js project');
+  console.error('Please run specit from within a valid Node.js project');
   process.exit(1);
 }
 

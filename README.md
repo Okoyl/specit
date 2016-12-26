@@ -1,13 +1,13 @@
-# speculate
+# specit
 
-[![Build Status](https://travis-ci.org/bbc/speculate.svg)](https://travis-ci.org/bbc/speculate) [![Code Climate](https://codeclimate.com/github/bbc/speculate/badges/gpa.svg)](https://codeclimate.com/github/bbc/speculate) [![Test Coverage](https://codeclimate.com/github/bbc/speculate/badges/coverage.svg)](https://codeclimate.com/github/bbc/speculate/coverage)
+> specit is a fork of [speculate](https://github.com/bbc/specit) with some different goals.
 
-> Automatically generates an RPM Spec file for your Node.js project
+Automatically generates an RPM Spec file for your Node.js project
 
 ## Installation
 
 ```
-npm install --global speculate
+npm install --global specit
 ```
 
 ## Features
@@ -46,10 +46,10 @@ my-cool-api
 1 directory, 2 files
 ```
 
-Run the `speculate` command from inside the project directory:
+Run the `specit` command from inside the project directory:
 
 ```
-speculate
+specit
 ```
 
 You've now got an RPM Spec file and a systemd service definition for your project. You'll also notice that your application has been packaged into a `tar.gz` archive, ready to be built with an RPM building tool like [`rpmbuild`](http://www.rpm.org/max-rpm-snapshot/rpmbuild.8.html) or [`mock`](https://fedoraproject.org/wiki/Mock):
@@ -68,7 +68,7 @@ my-cool-api
 3 directories, 5 files
 ```
 
-Speculate is designed to be used at build time, just before you package your application into an RPM. Because of this, we recommend adding the generated files to your `.gitignore` file:
+Specit is designed to be used at build time, just before you package your application into an RPM. Because of this, we recommend adding the generated files to your `.gitignore` file:
 
 ```
 *.service
@@ -78,42 +78,53 @@ SPECS
 
 ### Install your dependencies _first_
 
-Speculate assumes that you've _already installed your npm dependencies_ when it is run. This means that you don't need to worry about running `npm install` inside a clean RPM-building environment like _mock_.
+Specit assumes that you've _already installed your npm dependencies_ when it is run. This means that you don't need to worry about running `npm install` inside a clean RPM-building environment like _mock_.
 
 The generated spec file instructs your RPM building tool to run [`npm rebuild`](https://docs.npmjs.com/cli/rebuild) as part of the build process. This ensures that any native modules are rebuilt for your target environment, even if they were originally installed on a different platform.
 
-A typical speculate build looks like this:
+A typical specit build looks like this:
 
 ```bash
 npm install
 npm test
-speculate
+specit
 # build the RPM (using rpmbuild, mock etc.)
 ```
 
 ### Local installation
 
-To avoid the need to install speculate globally, we recommend installing it _locally_ and creating an [npm script](https://docs.npmjs.com/misc/scripts) in your `package.json` file:
+To avoid the need to install specit globally, we recommend installing it _locally_ and creating an [npm script](https://docs.npmjs.com/misc/scripts) in your `package.json` file:
 
 ```
-npm install --save-dev speculate
+npm install --save-dev specit
 ```
 
 ```json
 {
   "scripts": {
-    "spec": "speculate"
+    "spec": "specit"
   }
 }
 ```
 
-You can then run `npm run spec` to generate your spec file in an environment where speculate isn't installed globally (like your CI server.)
+You can then run `npm run spec` to generate your spec file in an environment where specit isn't installed globally (like your CI server.)
+
+### Custom Spec Template
+
+If you want to use a different specfile template to create you package, you can specify it your `package.json`:
+```json
+{
+  "spec": {
+    "specTemplate": "templates/myspec.mustache"
+  }
+}
+```
 
 ### Pruning dependencies
 
 To minimise the final RPM size, your development dependencies (dependencies added with the --save-dev flag) are automatically [pruned](https://docs.npmjs.com/cli/prune) so that they're not shipped with your production code.
 
-If for some reason you need to package your dev dependencies with your production code you can explicity tell speculate not to prune by adding the following to your `package.json`:
+If for some reason you need to package your dev dependencies with your production code you can explicity tell specit not to prune by adding the following to your `package.json`:
 
 ```json
 {
@@ -125,7 +136,7 @@ If for some reason you need to package your dev dependencies with your productio
 
 ### `npm start` script
 
-The systemd service file that Speculate generates uses the `npm start` script to start your application. Make sure that you've defined this script in your `package.json` file.
+The systemd service file that Specit generates uses the `npm start` script to start your application. Make sure that you've defined this script in your `package.json` file.
 
 ```json
 {
@@ -137,7 +148,7 @@ The systemd service file that Speculate generates uses the `npm start` script to
 
 ### Node versions
 
-By default, the spec file that speculate generates _isn't_ tied to a particular Node version. It simply requires the `nodejs` package. It's up to you to make the package available when you install the RPM using `yum`.
+By default, the spec file that specit generates _isn't_ tied to a particular Node version. It simply requires the `nodejs` package. It's up to you to make the package available when you install the RPM using `yum`.
 
 We **strongly recommend** that you use the [Nodesource binary distributions](https://github.com/nodesource/distributions) to install a modern version of Node.js for both your RPM building environment and your target server. Follow the setup instructions for [Enterprise Linux](https://github.com/nodesource/distributions#rpm) and then run `yum install nodejs`.
 
@@ -154,7 +165,7 @@ The `nodeVersion` property must conform to the [RPM version syntax](http://www.r
 
 ### Directory Structure
 
-Speculate creates the following directories for your application:
+Specit creates the following directories for your application:
 
 |Directory|Purpose|
 |---------|-------|
@@ -163,7 +174,7 @@ Speculate creates the following directories for your application:
 
 ## Configuration
 
-Speculate is configured using the `spec` property inside your existing `package.json` file.
+Specit is configured using the `spec` property inside your existing `package.json` file.
 
 ### Dependencies
 
@@ -238,18 +249,18 @@ If you need to specify environment variables during startup (NODE_ENV for exampl
 
 ### Release Number
 
-By default speculate will set the RPM release number to 1, if you want to override this you can do so by using the `--release` flag:
+By default specit will set the RPM release number to 1, if you want to override this you can do so by using the `--release` flag:
 
 ```sh
-speculate --release=7
+specit --release=7
 ```
 
 ### Custom Name
 
-By default speculate will set the name from `package.json`, if you want to override this you can do so by using the `--name` flag:
+By default specit will set the name from `package.json`, if you want to override this you can do so by using the `--name` flag:
 
 ```sh
-speculate --name=my-cool-api
+specit --name=my-cool-api
 ```
 
 This is useful if you are using private NPM packages which start with an `@`.

@@ -1,6 +1,6 @@
 {
-  "name": "speculate",
-  "version": "1.6.1",
+  "name": "specit",
+  "version": "1.0.0",
   "description": "Automatically generates an RPM Spec file for your Node.js project",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bbc/speculate.git"
+    "url": "git+https://github.com/Okoyl/specit.git"
   },
   "keywords": [
     "spec",
@@ -21,13 +21,18 @@
     "generate"
   ],
   "author": "ibl-team@lists.forge.bbc.co.uk",
+  "contributors": [
+    {
+      "name": "Okoyl"
+    }
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bbc/speculate/issues"
+    "url": "https://github.com/Okoyl/specit/issues"
   },
-  "homepage": "https://github.com/bbc/speculate#readme",
+  "homepage": "https://github.com/Okoyl/specit#readme",
   "bin": {
-    "speculate": "./bin/speculate.js"
+    "specit": "./bin/specit.js"
   },
   "dependencies": {
     "commander": "^2.9.0",

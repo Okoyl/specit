@@ -13,9 +13,8 @@ npm install --global specit
 ## Features
 
 * Generates an RPM Spec file for your project
-* Creates a [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service definition file
+* (optional) Creates a [systemd](https://www.freedesktop.org/wiki/Software/systemd/) service definition file
 * Supports configuration using your existing `package.json`
-* Currently supports CentOS 7
 
 ## Usage
 

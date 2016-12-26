@@ -2,11 +2,14 @@
 
 var path = require('path');
 var program = require('commander');
+var updateNotifier = require('update-notifier');
 
 var validator = require('../lib/validator');
 var generate = require('../lib/generate');
 var clean = require('../lib/clean');
 var commandPkg = require('../package');
+
+updateNotifier({pkg: commandPkg}).notify();
 
 var cwd = process.cwd();
 var isValid = validator(cwd);

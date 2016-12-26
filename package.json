@@ -39,7 +39,8 @@
     "hogan.js": "^3.0.2",
     "lodash": "^4.6.1",
     "rimraf": "^2.5.2",
-    "tar-fs": "^1.11.1"
+    "tar-fs": "^1.11.1",
+    "update-notifier": "^1.0.3"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",

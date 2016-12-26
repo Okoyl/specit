@@ -216,6 +216,21 @@ If you have any build dependencies (such as `python` for `node-gyp`), instead of
 }
 ```
 
+### Build scripts
+
+If you need to perform any actions after installing your package (such as moving files on the target server) you can specify these inline using the `post` property:
+
+```json
+{
+  "spec": {
+    "build": [
+      "gulp clean",
+      "gulp build"
+    ]
+  }
+}
+```
+
 ### Executables
 
 If you have scripts that need to be executable when they're installed on your target server, add them to the `executable` array. You can list both files and entire directories:

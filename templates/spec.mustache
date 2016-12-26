@@ -44,6 +44,7 @@ cp -r ./* %{buildroot}/usr/lib/{{name}}
 mkdir -p %{buildroot}/var/log/{{name}}
 
 %post
+ln -s /usr/lib/{{name}}/{{name}}.service /usr/lib/systemd/system/{{name}}.service
 systemctl enable /usr/lib/{{name}}/{{name}}.service
 {{#postInstallCommands}}
 {{.}}

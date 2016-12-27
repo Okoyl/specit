@@ -1,15 +1,15 @@
 %define name {{name}}
 %define version {{version}}
 %define release {{release}}
-{{#dist}}
-%define dist {{dist}}
-{{/dist}}
 %define buildroot %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
-
 
 Name: %{name}
 Version: %{version}
+Release: %{release}
+{{#dist}}
+%define dist {{dist}}
 Release: %{release}.%{?dist}
+{{/dist}}
 Summary: {{name}}
 
 Group: Installation Script
@@ -59,6 +59,9 @@ mkdir -p %{buildroot}{{installDir}}/{{name}}
 cp -r ./* %{buildroot}{{installDir}}/{{name}}
 
 %post
+cp {{installDir}}/{{name}}/{{name}}.service /usr/lib/systemd/system/{{name}}.service
+systemctl daemon-reload
+systemctl enable {{name}}.service
 {{#postInstallCommands}}
 {{.}}
 {{/postInstallCommands}}

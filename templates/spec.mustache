@@ -1,11 +1,15 @@
 %define name {{name}}
 %define version {{version}}
 %define release {{release}}
+{{#dist}}
+%define dist {{dist}}
+{{/dist}}
 %define buildroot %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
+
 
 Name: %{name}
 Version: %{version}
-Release: %{release}
+Release: %{release}.%{?dist}
 Summary: {{name}}
 
 Group: Installation Script
@@ -14,9 +18,8 @@ Source: %{name}.tar.gz
 BuildRoot: %{buildroot}
 {{#noarch}}
 BuildArch: noarch
-# Disable any build shell actions. replace them with simply 'true'
+%global __strip /bin/true
 %define __spec_build_post true
-%define __spec_build_pre true
 {{/noarch}}
 Requires: nodejs{{#nodeVersion}} {{{nodeVersion}}}{{/nodeVersion}}
 {{#requires}}
@@ -35,7 +38,7 @@ AutoReqProv: no
 
 %build
 {{#buildCommands}}
-    {{.}}
+{{.}}
 {{/buildCommands}}
 {{#prune}}
 npm prune --production
@@ -54,13 +57,11 @@ getent passwd {{username}} >/dev/null || useradd -r -g {{username}} -G {{usernam
 %install
 mkdir -p %{buildroot}{{installDir}}/{{name}}
 cp -r ./* %{buildroot}{{installDir}}/{{name}}
-{{#syslog}}
-mkdir -p %{buildroot}/var/log/{{name}}
-{{/syslog}}
 
 %post
 cp {{installDir}}/{{name}}/{{name}}.service /usr/lib/systemd/system/{{name}}.service
-systemctl enable /usr/lib/systemd/system/{{name}}.service
+systemctl daemon-reload
+systemctl enable {{name}}.service
 {{#postInstallCommands}}
 {{.}}
 {{/postInstallCommands}}
@@ -71,9 +72,6 @@ rm -rf %{buildroot}
 %files
 %defattr(644, {{username}}, {{username}}, 755)
 {{installDir}}/{{name}}
-{{#syslog}}
-/var/log/{{name}}
-{{/syslog}}
 {{#hasExecutableFiles}}
 %defattr(755, {{username}}, {{username}}, 755)
 {{#executableFiles}}

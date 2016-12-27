@@ -25,7 +25,8 @@ program
   .version(commandPkg.version)
   .option('-r --release <release>', 'Specify release number of package')
   .option('-n --name <name>', 'Specify custom name for package')
-  .option('-s --systemd', 'Generate systemd service.')
+  .option('-d --distribution <dist>', 'Specify target distribution.(.el5, .el7, .fc26, .fc22')
+//  .option('-s --systemd', 'Generate systemd service.')
   .parse(process.argv);
 
 // Commander has a magic property called name when not overriden by a parameter

@@ -1,6 +1,7 @@
 # specit
 
 > specit is a fork of [speculate](https://github.com/bbc/specit) with some different goals. specit meant to support more distributions, provide even more options. Feel free to create issues, submit more code.
+> Note: Currenly specit doesn't generate systemd services, we plan to return this feature and provide initd template as well for ancient linux distributions. 
 
 Automatically generates an RPM Spec file for your Node.js project
 

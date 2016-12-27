@@ -5,10 +5,12 @@
 
 Name: %{name}
 Version: %{version}
-Release: %{release}
 {{#dist}}
 %define dist {{dist}}
 Release: %{release}.%{?dist}
+{{/dist}}
+{{^dist}}
+Release: %{release}
 {{/dist}}
 Summary: {{name}}
 

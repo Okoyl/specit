@@ -1,6 +1,6 @@
 {
   "name": "specit",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Automatically generates an RPM Spec file for your Node.js project",
   "main": "index.js",
   "scripts": {

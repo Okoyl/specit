@@ -61,9 +61,6 @@ mkdir -p %{buildroot}{{installDir}}/{{name}}
 cp -r ./* %{buildroot}{{installDir}}/{{name}}
 
 %post
-cp {{installDir}}/{{name}}/{{name}}.service /usr/lib/systemd/system/{{name}}.service
-systemctl daemon-reload
-systemctl enable {{name}}.service
 {{#postInstallCommands}}
 {{.}}
 {{/postInstallCommands}}

@@ -54,11 +54,11 @@ npm rebuild
 
 %pre
 getent group {{username}} >/dev/null || groupadd -r {{username}}
-getent passwd {{username}} >/dev/null || useradd -r -g {{username}} -G {{username}} -d / -s /sbin/nologin -c "{{username}}" {{username}}
+getent passwd {{username}} >/dev/null || useradd -r -g {{username}} -G {{username}} -d / -s /sbin/nologin {{username}}
 
 %install
-mkdir -p %{buildroot}{{installDir}}/{{name}}
-cp -r ./* %{buildroot}{{installDir}}/{{name}}
+mkdir -p %{buildroot}{{installDir}}
+cp -r ./* %{buildroot}{{installDir}}
 
 %post
 {{#postInstallCommands}}

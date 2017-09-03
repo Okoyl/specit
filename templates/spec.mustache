@@ -14,7 +14,6 @@ Release: %{release}
 {{/dist}}
 Summary: {{name}}
 
-Group: Installation Script
 License: {{license}}
 Source: %{name}.tar.gz
 BuildRoot: %{buildroot}
@@ -54,11 +53,11 @@ npm rebuild
 
 %pre
 getent group {{username}} >/dev/null || groupadd -r {{username}}
-getent passwd {{username}} >/dev/null || useradd -r -g {{username}} -G {{username}} -d / -s /sbin/nologin -c "{{username}}" {{username}}
+getent passwd {{username}} >/dev/null || useradd -r -g {{username}} -G {{username}} -d / -s /sbin/nologin {{username}}
 
 %install
-mkdir -p %{buildroot}{{installDir}}/{{name}}
-cp -r ./* %{buildroot}{{installDir}}/{{name}}
+mkdir -p %{buildroot}{{installDir}}
+cp -r ./* %{buildroot}{{installDir}}
 
 %post
 {{#postInstallCommands}}
@@ -70,7 +69,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(644, {{username}}, {{username}}, 755)
-{{installDir}}/{{name}}
+{{installDir}}
 {{#hasExecutableFiles}}
 %defattr(755, {{username}}, {{username}}, 755)
 {{#executableFiles}}
